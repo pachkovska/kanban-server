@@ -1,8 +1,16 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const mongoose = require('mongoose');
 
 const tasksRoutes = require('./routes/tasks');
+
+mongoose.connect(
+    "mongodb+srv://kanbanDBUser:booliKT22@@kanban-cluster-mvax5.mongodb.net/test",
+    {
+        useMongoClient: true
+    }
+)
 
 app.use(morgan('dev'));
 

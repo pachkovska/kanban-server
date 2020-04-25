@@ -6,18 +6,24 @@ const mongoose = require('mongoose');
 const tasksRoutes = require('./routes/tasks');
 
 mongoose.connect(
-    "mongodb+srv://kanbanDBUser:booliKT22@@kanban-cluster-mvax5.mongodb.net/test",
+    "mongodb+srv://kanbanDBUser:booliKT2240@kanban-cluster-mvax5.mongodb.net/test?retryWrites=true&w=majority",
     {
-        useMongoClient: true
+        useNewUrlParser: true,
+        useUnifiedTopology: true
     }
 )
+    .then(() => console.log("mongo got connected"))
+    .catch(err => console.log(err));
 
 app.use(morgan('dev'));
 
 app.use((req, res, next) => {
+    console.log("header stuff is getting executed")
     res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     if(req.method === "OPTIONS") {
         res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+        console.log(req)
         return res.status(200).json({});
     }
 });
@@ -38,7 +44,5 @@ app.use((error, req, res, next) => {
         }
     })
 });
-
-
 
 module.exports = app;

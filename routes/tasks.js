@@ -6,6 +6,8 @@ const Task = require('../models/task');
 
 router.get('/', (req, res, next) => {
     console.log("GET request started executing")
+    console.log(res);
+    Task.find();
     res.status(200).json({
         message: 'Handling GET requests to /tasks'
     });

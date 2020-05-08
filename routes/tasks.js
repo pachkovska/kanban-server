@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
         _id: new mongoose.Types.ObjectId(),
         taskTitle: req.body.taskTitle,
         taskBody: req.body.taskBody,
-        status: req.body.parser ? req.body.parser : "todo"
+        status: req.body.status ? req.body.status : "todo"
     });
     task.save()
         .then(result => {
@@ -74,15 +74,15 @@ router.post('/:taskId', (req, res, next) => {
 
 router.delete('/:taskId', (req, res, next) => {
     const id = req.params.taskId;
-    if (id === 'special') {
-        res.status(200).json({
-            message: 'Updated task in database'
-        });
-    } else {
-        res.status(200).json({
-            message: "Patch request was sent for taskId that does not exist"
+    Task.deleteOne({_id: id})
+        .exec()
+        .then(docs => {
+            res.status(200).json({tasks: docs});
         })
-    }
+        .catch(err => {
+            res.status(500).json(err);
+        });
+
 });
 
 module.exports = router;

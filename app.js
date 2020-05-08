@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const tasksRoutes = require('./routes/tasks');
 
 mongoose.connect(
-    "mongodb+srv://kanbanDBUser:booliKT2240@kanban-cluster-mvax5.mongodb.net/test?retryWrites=true&w=majority",
+    "mongodb+srv://kanbanDBUser:booliKT2240@kanban-cluster-mvax5.mongodb.net",
     {
         useNewUrlParser: true,
         useUnifiedTopology: true

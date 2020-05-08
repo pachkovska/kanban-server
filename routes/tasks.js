@@ -7,18 +7,22 @@ const Task = require('../models/task');
 router.get('/', (req, res, next) => {
     console.log("GET request started executing")
     console.log(res);
-    Task.find();
-    res.status(200).json({
-        message: 'Handling GET requests to /tasks'
-    });
+    Task.find()
+        .exec()
+        .then(docs => {
+            res.status(200).json({tasks: docs});
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
 });
 
-router.post('/tasks', (req, res) => {
+router.post('/', (req, res) => {
     const task = new Task({
         _id: new mongoose.Types.ObjectId(),
         taskTitle: req.body.taskTitle,
         taskBody: req.body.taskBody,
-        status: req.body.status
+        status: req.body.parser ? req.body.parser : "todo"
     });
     task.save()
         .then(result => {
@@ -29,7 +33,7 @@ router.post('/tasks', (req, res) => {
     });
 });
 
-router.get('/tasks:taskId', (req, res) => {
+router.get('/:taskId', (req, res) => {
     const id = req.params.taskId;
     if (id === 'special') {
         res.status(200).json({

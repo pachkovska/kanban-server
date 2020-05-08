@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const tasksRoutes = require('./routes/tasks');
 
@@ -16,20 +17,10 @@ mongoose.connect(
     .catch(err => console.log(err));
 
 app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-    // console.log("header stuff is getting executed")
-    // console.log(req.rawHeaders);
-    // res.header('Access-Control-Allow-Origin', '*');
-    // // console.log(res);
-    // res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    // // res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-    // console.log("headers got set")
-    // if(req.method === "OPTIONS") {
-    //     res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-    //     console.log("OPTIONS were passed")
-    //     return res.status(200).json({});
-    // }
     res.set({
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'DELETE, GET, PATCH, POST, PUT',
@@ -42,7 +33,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/tasks', tasksRoutes);
+app.use('/', tasksRoutes);
 // app.use('/boards', boardsRoutes);
 app.use((req, res, next) => {
     const error = new Error('Not found');

@@ -5,8 +5,7 @@ const mongoose = require('mongoose');
 const Task = require('../models/task');
 
 router.get('/', (req, res, next) => {
-    console.log("GET request started executing")
-    console.log(res);
+    console.log("GET request started executing");
     Task.find()
         .exec()
         .then(docs => {
@@ -48,11 +47,12 @@ router.post('/', (req, res) => {
 
 router.patch('/:taskId', (req, res, next) => {
     const id = req.params.taskId;
-    console.log(req.body)
+    console.log("request body in patch request: ", req.body);
     Task.updateOne({_id: id}, {
         $set: {
             taskTitle: req.body.taskTitle,
-            taskBody: req.body.taskBody
+            taskBody: req.body.taskBody,
+            status: req.body.status
         }
     })
         .exec()

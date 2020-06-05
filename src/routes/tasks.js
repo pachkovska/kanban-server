@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 
 const Task = require('../models/task');
+const Board = require('../models/board');
 
 router.get('/', (req, res, next) => {
     console.log("GET request started executing");
@@ -16,12 +17,13 @@ router.get('/', (req, res, next) => {
         });
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const task = new Task({
         _id: new mongoose.Types.ObjectId(),
         taskTitle: req.body.taskTitle,
         taskBody: req.body.taskBody,
-        status: req.body.status ? req.body.status : "todo"
+        status: req.body.status ? req.body.status : "todo",
+        board: await Board.findOne({boardName: "some new board"}).populate('_id')
     });
     task.save()
         .then(result => {

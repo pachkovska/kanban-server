@@ -5,6 +5,7 @@ const taskSchema = mongoose.Schema({
     taskTitle: String,
     taskBody: String,
     status: String,
+    board: {type: mongoose.Schema.Types.ObjectId, ref: 'Board'}
 });
 
 module.exports = mongoose.model('Task', taskSchema);

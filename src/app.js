@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
+const serverless = require('serverless-http');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
-const tasksRoutes = require('./routes/tasks');
+const taskRoutes = require('./routes/tasks');
+const boardRoutes = require('./routes/boards');
 
 mongoose.connect(
     "mongodb+srv://kanbanDBUser:booliKT2240@kanban-cluster-mvax5.mongodb.net",
@@ -33,8 +34,8 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/', tasksRoutes);
-// app.use('/boards', boardsRoutes);
+app.use('/.netlify/functions/app/tasks', taskRoutes);
+app.use('/.netlify/functions/app/boards', boardRoutes);
 app.use((req, res, next) => {
     const error = new Error('Not found');
     error.status = 404;
@@ -51,3 +52,4 @@ app.use((error, req, res, next) => {
 });
 
 module.exports = app;
+module.exports.handler = serverless(app);

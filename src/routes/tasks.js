@@ -34,19 +34,6 @@ router.post('/', async (req, res) => {
     });
 });
 
-// router.get('/:taskId', (req, res) => {
-//     const id = req.params.taskId;
-//     if (id === 'special') {
-//         res.status(200).json({
-//             message: 'Handling GET requests to /tasks for a special ID'
-//         });
-//     } else {
-//         res.status(200).json({
-//             message: "Id was passed, but not found in Database"
-//         })
-//     }
-// });
-
 router.patch('/:taskId', (req, res, next) => {
     const id = req.params.taskId;
     console.log("request body in patch request: ", req.body);

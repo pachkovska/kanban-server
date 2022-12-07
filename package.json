@@ -16,13 +16,13 @@
   "author": "Yulia Tuzov",
   "license": "ISC",
   "devDependencies": {
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "mongoose": "^5.9.10",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.3"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "loadsh": "0.0.4",
     "netlify-lambda": "^1.6.3",
     "serverless-http": "^2.5.0"
